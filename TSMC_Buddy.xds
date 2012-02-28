@@ -1,0 +1,73 @@
+{
+    "name": "TSMC_Buddy",
+    "settings": {
+        "urlPrefix": "http://localhost:8080/",
+        "directAPI": "",
+        "spacesToIndent": 4,
+        "codeGenFormat": "Class",
+        "exportPath": "C:/Users/user/Desktop/Work/apache-tomcat-7.0.21/webapps/ROOT",
+        "extPath": "http://extjs.cachefly.net/ext-4.0.2a/",
+        "senchaIoKey": "",
+        "senchaIoPath": "http://extjs.cachefly.net/designer/IO/",
+        "lineEnding": "CRLF",
+        "instantiateStore": true,
+        "genTimestamps": false,
+        "saveOnDeploy": false,
+        "appName": "MyApp",
+        "mapsAPI": "http://maps.google.com/maps/api/js?sensor=true",
+        "cssPath": ""
+    },
+    "xdsVersion": "2.0.0",
+    "framework": "ext40",
+    "topInstanceFileMap": {
+        "bda97ab6-96e9-47ae-9b98-2beaa77f4a48": {
+            "paths": [
+                "app/view/TopViewport.js",
+                "app/view/ui/TopViewport.js",
+                "app/view/Viewport.js"
+            ],
+            "className": "TopViewport"
+        },
+        "24daceb2-80eb-4bdb-8e9e-e82211ce39a7": {
+            "paths": [
+                "app/view/PeopleFinder.js",
+                "app/view/ui/PeopleFinder.js"
+            ],
+            "className": "PeopleFinder"
+        },
+        "cf5794b6-63aa-495c-9ff9-19def2dd7ba4": {
+            "paths": [
+                "app/view/Phone.js",
+                "app/view/ui/Phone.js"
+            ],
+            "className": "Phone"
+        },
+        "4be330d1-0235-48f9-943e-30193e1ac055": {
+            "paths": [
+                "app/view/Sms.js",
+                "app/view/ui/Sms.js"
+            ],
+            "className": "Sms"
+        },
+        "47742483-d0af-4ba1-96e5-dd18f2c1b1ef": {
+            "paths": [
+                "app/view/Password.js",
+                "app/view/ui/Password.js"
+            ],
+            "className": "Password"
+        },
+        "9b250715-44a8-4dd7-80f1-54ddab335105": {
+            "paths": [
+                "app/view/Favorites.js",
+                "app/view/ui/Favorites.js"
+            ],
+            "className": "Favorites"
+        }
+    },
+    "expandedState": {
+        "data": true,
+        "model": true,
+        "component": true,
+        "controller": true
+    }
+}
