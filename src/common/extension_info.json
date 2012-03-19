@@ -1,16 +1,16 @@
 {
   "content_scripts": [], 
-  "homepage_url": "http://kangoextensions.com/", 
-  "version": "0.9", 
+  "homepage_url": "https://github.com/df1/TSMC-Buddy", 
+  "version": "0.1", 
   "name": "TSMC Buddy", 
-  "creator": "KangoExtensions", 
+  "creator": "df1", 
   "background_scripts": [
     "main.js"
   ], 
   "browser_button": {
-    "caption": "Kango", 
-    "tooltipText": "Kango", 
-    "icon": "icons/button.png"
+    "caption": "TSMC Buddy", 
+    "tooltipText": "TSMC Buddy", 
+    "icon": "icons/icon19.png"
   }, 
   "description": "Extension description"
 }

@@ -1,0 +1,20 @@
+{
+    "id": "ExtBox1-ext-gen2484",
+    "type": "application",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "views": [],
+        "designer|launch": "",
+        "appFolder": null,
+        "autoCreateViewport": true,
+        "name": "TsmcBuddy"
+    },
+    "customConfigs": [],
+    "designerId": "application",
+    "$viewOrder": 0,
+    "expanded": true
+}

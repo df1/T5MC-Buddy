@@ -1,0 +1,10 @@
+/*
+Built using Kango - Cross-browser extension framework.
+http://kangoextensions.com/
+*/
+function KangoUIBrowserButton(details){var self=this;this._eventListener=new KangoEventTarget();var properties={disabled:false,title:'',icon:'',badge:{},popup:{},onclick:function(){self._onClicked();}};if(kango.lang.isObject(details)){if(kango.lang.isString(details.icon)){properties.icon=details.icon;}
+if(kango.lang.isString(details.tooltipText)){properties.title=details.tooltipText;}}
+this._button=opera.contexts.toolbar.createItem(properties);opera.contexts.toolbar.addItem(this._button);if(kango.lang.isObject(details)&&kango.lang.isObject(details.popup)){this.setPopup(details.popup);}}
+KangoUIBrowserButton.prototype={_button:null,_popupHostUrl:'kango-ui/popup.html',_eventListener:null,event:{Command:'command'},setTooltipText:function(text){this._button.title=text;},setCaption:function(text){},setIcon:function(url){if(url.indexOf(kango.SCHEME)==0||url.indexOf('http://')!=0||url.indexOf('https://')!=0){url=url.replace(kango.SCHEME,'');}
+this._button.icon=url;},setBadgeValue:function(val){val=(val!=null&&val!=0)?val.toString():'';if(this._badgeText!=val){this._button.badge.textContent=val;}},setBadgeBackgroundColor:function(color){},setPopup:function(details){this._popupDetails=details;if(details!=null&&kango.lang.isString(details.url)){this._button.popup.href=this._popupHostUrl;this._button.popup.width=details.width;this._button.popup.height=details.height+4;}
+else{this._button.popup={};}},getPopupDetails:function(){return this._popupDetails;},addEventListener:function(name,callback){return this._eventListener.addEventListener(name,callback);},removeEventListener:function(name,callback){return this._eventListener.removeEventListener(name,callback);},setContextMenu:function(){},_onClicked:function(){return this._eventListener.fireEvent(this.event.Command);}};

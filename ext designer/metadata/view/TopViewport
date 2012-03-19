@@ -1,0 +1,675 @@
+{
+    "id": "ExtBox1-ext-gen2522",
+    "type": "viewport",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|initialView": true,
+        "layout": "fit",
+        "designer|userClassName": "TopViewport"
+    },
+    "customConfigs": [],
+    "designerId": "9392e4c7-effa-4ace-a124-0f5ac79f0888",
+    "$viewOrder": 0,
+    "expanded": true,
+    "cn": [
+        {
+            "id": "ExtBox1-ext-gen2712",
+            "type": "tabpanel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "id": "mainTabPanel",
+                "activeTab": 3,
+                "designer|userClassName": "MyTabPanel"
+            },
+            "customConfigs": [],
+            "expanded": true,
+            "cn": [
+                {
+                    "id": "ExtBox1-ext-gen2721",
+                    "type": "panel",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "html": "<iframe style=\"position:absolute;top:0px;left:0px;\" width=\"100%\" height=\"100%\" src=\"http://f8cmydev1.tsmc.com.tw:7091/conf/main.do?operation=showComm\" scrolling=\"no\" frameborder=\"0\"></iframe>",
+                        "id": "pfPanel",
+                        "title": "My",
+                        "designer|userClassName": "MyPanel"
+                    },
+                    "customConfigs": [],
+                    "expanded": false,
+                    "cn": [
+                        {
+                            "id": "ExtBox1-ext-gen2730",
+                            "type": "tab",
+                            "reference": {
+                                "name": "tabConfig",
+                                "type": "object"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|userClassName": "TabConfig"
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen15654",
+                            "type": "button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "hidden": true,
+                                "id": "conf20Btn",
+                                "margin": 20,
+                                "style": "position:absolute;z-index:1000000;",
+                                "text": "Click here for NTLM login first",
+                                "designer|userClassName": "MyButton3"
+                            },
+                            "customConfigs": [],
+                            "expanded": true,
+                            "cn": [
+                                {
+                                    "id": "ExtBox1-ext-gen16018",
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onConf20BtnClick",
+                                        "implHandler": "window.open('http://f8cmydev1.tsmc.com.tw:7091/conf/main.do?operation=showComm&dispType=conference','_blank');\n",
+                                        "name": "click",
+                                        "scope": "me",
+                                        "designer|userClassName": "onConf20BtnClick"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                }
+                            ]
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen24320",
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onPfPanelAfterRender",
+                                "implHandler": "var me = this;\nExt.Ajax.request({\n    method: 'GET',\n    url: 'http://f8cmydev1.tsmc.com.tw:7091/conf/main.do?operation=showComm&dispType=conference',\n    success: function(response){\n    },\n    failure: function(response){\n        Ext.getCmp('conf20Btn').show();\n    }\n});\n",
+                                "name": "afterrender",
+                                "scope": "me",
+                                "designer|userClassName": "onPfPanelAfterRender"
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        }
+                    ]
+                },
+                {
+                    "id": "ExtBox1-ext-gen2735",
+                    "type": "form",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "id": "callPanel",
+                        "layout": "absolute",
+                        "title": "Call",
+                        "designer|userClassName": "MyForm1",
+                        "designer|snapToGrid": 10
+                    },
+                    "customConfigs": [],
+                    "expanded": false,
+                    "cn": [
+                        {
+                            "id": "ExtBox1-ext-gen2744",
+                            "type": "tab",
+                            "reference": {
+                                "name": "tabConfig",
+                                "type": "object"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|userClassName": "TabConfig1"
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen18532",
+                            "type": "textfield",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "id": "callFromField",
+                                "style": "line-height:48px;",
+                                "styleHtmlContent": null,
+                                "width": 260,
+                                "fieldStyle": "font-size:48px; height:60px;",
+                                "fieldLabel": "",
+                                "labelWidth": 50,
+                                "allowBlank": false,
+                                "emptyText": "From",
+                                "maxLength": 7,
+                                "minLength": 7,
+                                "regex": "/7\\d{6}/",
+                                "regexText": "Illegal phone number",
+                                "designer|userClassName": "MyTextField6",
+                                "layout|x": 10,
+                                "layout|y": 10
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen19160",
+                            "type": "textfield",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "id": "callToField",
+                                "style": "line-height:48px;",
+                                "width": 260,
+                                "fieldStyle": "font-size:48px; height:60px;",
+                                "fieldLabel": "",
+                                "labelWidth": 50,
+                                "allowBlank": false,
+                                "emptyText": "To",
+                                "maxLength": 7,
+                                "minLength": 7,
+                                "regex": "/7\\d{6}/",
+                                "regexText": "Illegal phone number",
+                                "designer|userClassName": "MyTextField6",
+                                "layout|x": 10,
+                                "layout|y": 80
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen19837",
+                            "type": "button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "height": 30,
+                                "id": "callBtn",
+                                "width": 260,
+                                "text": "GO",
+                                "designer|userClassName": "MyButton1",
+                                "layout|x": 10,
+                                "layout|y": 150
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        }
+                    ]
+                },
+                {
+                    "id": "ExtBox1-ext-gen2749",
+                    "type": "panel",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "id": "smsPanel",
+                        "layout": "absolute",
+                        "title": "Text",
+                        "designer|userClassName": "MyPanel2",
+                        "designer|snapToGrid": 10
+                    },
+                    "customConfigs": [],
+                    "expanded": false,
+                    "cn": [
+                        {
+                            "id": "ExtBox1-ext-gen2758",
+                            "type": "tab",
+                            "reference": {
+                                "name": "tabConfig",
+                                "type": "object"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|userClassName": "TabConfig2"
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen21258",
+                            "type": "textfield",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "id": "smsBylineField",
+                                "width": 260,
+                                "fieldLabel": "",
+                                "labelWidth": 50,
+                                "emptyText": "署名",
+                                "designer|userClassName": "MyTextField8",
+                                "layout|x": 10,
+                                "layout|y": 10
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen38670",
+                            "type": "textfield",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "id": "smsDestField",
+                                "width": 260,
+                                "fieldLabel": "",
+                                "labelWidth": 50,
+                                "emptyText": "對方MVPN",
+                                "designer|userClassName": "MyTextField8",
+                                "layout|x": 10,
+                                "layout|y": 40
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen22086",
+                            "type": "textareafield",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "height": 140,
+                                "id": "smsTextField",
+                                "width": 260,
+                                "fieldLabel": "",
+                                "emptyText": "簡訊內容",
+                                "designer|userClassName": "MyTextArea",
+                                "layout|x": 10,
+                                "layout|y": 70
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen22984",
+                            "type": "button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "height": 30,
+                                "width": 260,
+                                "text": "GO",
+                                "designer|userClassName": "MyButton2",
+                                "layout|x": 10,
+                                "layout|y": 220
+                            },
+                            "customConfigs": [],
+                            "expanded": true,
+                            "cn": [
+                                {
+                                    "id": "ExtBox1-ext-gen42589",
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onSmsButtonClick",
+                                        "implHandler": "Ext.Ajax.request({\n    method: 'POST',\n    url: 'http://f8cmydev1.tsmc.com.tw:7091/conf/phone.do',\n    params:{\n        operation: 'sendSms',\n        sender: Ext.getCmp('smsBylineField').getValue(),\n        sendSmsObjArry:Ext.encode([{\n            \"id\":\"\",\n            \"ntAccount\":\"\",\n            \"phone\": Ext.getCmp('smsDestField').getValue(),\n            \"name\":\"test\",\n        \"isMvpn\":1}]),\n        text: Ext.getCmp('smsTextField').getValue()\n    },\n    success: function(response){\n        var result = Ext.decode(response.responseText);        \n        var info = Ext.Msg.show({\n            title:'傳送成功',\n            msg: result.message + '<br/>' + '本訊息將於1秒後自動關閉'\n        });   \n        Ext.Function.defer(function(){\n            info.hide();\n        },2000);\n    },\n    failure: function(response){\n        var result = Ext.decode(response.responseText);\n        Ext.Msg.alert('傳送失敗',result.msg);\n    }\n});",
+                                        "name": "click",
+                                        "scope": "me",
+                                        "designer|userClassName": "onSmsButtonClick"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "ExtBox1-ext-gen4325",
+                    "type": "form",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "id": "pwPanel",
+                        "layout": "absolute",
+                        "title": "Password",
+                        "designer|userClassName": "MyForm",
+                        "designer|snapToGrid": 10
+                    },
+                    "customConfigs": [],
+                    "expanded": true,
+                    "cn": [
+                        {
+                            "id": "ExtBox1-ext-gen4330",
+                            "type": "tab",
+                            "reference": {
+                                "name": "tabConfig",
+                                "type": "object"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|userClassName": "TabConfig2"
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen5987",
+                            "type": "textfield",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "id": "pwNtField",
+                                "width": 250,
+                                "name": "RequestUser",
+                                "value": null,
+                                "fieldLabel": null,
+                                "allowBlank": false,
+                                "emptyText": "帳號(NT)",
+                                "vtype": "alpha",
+                                "designer|userClassName": "MyTextField",
+                                "layout|x": 10,
+                                "layout|y": 40
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen6404",
+                            "type": "textfield",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "id": "pwIdField",
+                                "width": 250,
+                                "name": "UserID",
+                                "value": null,
+                                "fieldLabel": null,
+                                "allowBlank": false,
+                                "emptyText": "身分證字號",
+                                "vtype": "alphanum",
+                                "designer|userClassName": "MyTextField",
+                                "layout|x": 10,
+                                "layout|y": 70
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen10856",
+                            "type": "textfield",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "id": "pwTelField",
+                                "width": 250,
+                                "name": "TEL",
+                                "value": null,
+                                "fieldLabel": null,
+                                "allowBlank": false,
+                                "emptyText": "家中電話末六碼",
+                                "enforceMaxLength": true,
+                                "maxLength": 6,
+                                "minLength": 6,
+                                "designer|userClassName": "MyTextField",
+                                "layout|x": 10,
+                                "layout|y": 130
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen11238",
+                            "type": "textfield",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "id": "pwEmergencyField",
+                                "width": 250,
+                                "name": "Emergency",
+                                "value": null,
+                                "fieldLabel": null,
+                                "emptyText": "緊急聯絡人",
+                                "designer|userClassName": "MyTextField",
+                                "layout|x": 10,
+                                "layout|y": 160
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen11523",
+                            "type": "textfield",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "id": "pwField",
+                                "width": 250,
+                                "name": "Password1",
+                                "value": null,
+                                "fieldLabel": null,
+                                "allowBlank": false,
+                                "emptyText": "新密碼",
+                                "designer|userClassName": "MyTextField",
+                                "layout|x": 10,
+                                "layout|y": 190
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen10138",
+                            "type": "datefield",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "id": "pwDateField",
+                                "width": 250,
+                                "value": null,
+                                "fieldLabel": null,
+                                "allowBlank": false,
+                                "emptyText": "出生年月日",
+                                "format": "Y/m/d",
+                                "maxValue": null,
+                                "showToday": false,
+                                "startDay": null,
+                                "designer|userClassName": "MyDateField",
+                                "layout|x": 10,
+                                "layout|y": 100
+                            },
+                            "customConfigs": [],
+                            "expanded": false,
+                            "cn": [
+                                {
+                                    "id": "ExtBox1-ext-gen30282",
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onDatefieldExpand",
+                                        "implHandler": "field.getPicker().setValue(new Date(1980,0,1));\nfield.getPicker().showMonthPicker();",
+                                        "name": "expand",
+                                        "scope": "me",
+                                        "designer|userClassName": "onDatefieldExpand"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                }
+                            ]
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen7608",
+                            "type": "radiogroup",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "id": "pwTypeRadio",
+                                "padding": null,
+                                "width": 310,
+                                "fieldLabel": "",
+                                "labelAlign": null,
+                                "allowBlank": false,
+                                "designer|userClassName": "MyRadioGroup",
+                                "layout|x": 10,
+                                "layout|y": 10
+                            },
+                            "customConfigs": [],
+                            "expanded": true,
+                            "cn": [
+                                {
+                                    "id": "ExtBox1-ext-gen7628",
+                                    "type": "radiofield",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "width": null,
+                                        "name": "type",
+                                        "fieldLabel": null,
+                                        "boxLabel": "重設Notes密碼(50循環)",
+                                        "inputValue": "notes",
+                                        "designer|userClassName": "MyRadio1"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen7621",
+                                    "type": "radiofield",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "name": "type",
+                                        "fieldLabel": null,
+                                        "boxLabel": "重設NT密碼",
+                                        "checked": true,
+                                        "inputValue": "nt",
+                                        "designer|userClassName": "MyRadio"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                }
+                            ]
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen11872",
+                            "type": "button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "height": 30,
+                                "width": 250,
+                                "text": "GO",
+                                "designer|userClassName": "MyButton",
+                                "layout|x": 10,
+                                "layout|y": 220
+                            },
+                            "customConfigs": [],
+                            "expanded": true,
+                            "cn": [
+                                {
+                                    "id": "ExtBox1-ext-gen7795",
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onPwButtonClick",
+                                        "implHandler": "/*\nvar vals = Ext.getCmp('pwPanel').getForm().getFieldValues();\ndocument.pwNotesForm.RequestUser.value = vals.RequestUser;\ndocument.pwNotesForm.UserID.value = vals.UserID;\ndocument.pwNotesForm.BirthYear.value = Ext.getCmp('pwDateField').getValue().getFullYear();\ndocument.pwNotesForm.BirthMonth.value = Ext.getCmp('pwDateField').getValue().getMonth() +1;\ndocument.pwNotesForm.BirthDay.value = Ext.getCmp('pwDateField').getValue().getDate();\ndocument.pwNotesForm.TEL.value = vals.TEL;\ndocument.pwNotesForm.Emergency.value = vals.Emergency;\ndocument.pwNotesForm.Password1.value = vals.Password1;\ndocument.pwNotesForm.Password2.value = vals.Password1;\ndocument.pwNotesForm.submit();\n\nExt.Ajax.defaultPostHeader = \"application/x-www-form-urlencoded; charset=big5\";\nExt.getCmp('pwPanel').getForm().submit({\nurl: 'http://pcmsweb:2345/default.asp',\nmethod: 'POST'\n});\n*/\n\nif(!Ext.getCmp('pwPanel').getForm().isValid()){\n    return;\n}\n\nvar birthYear = Ext.getCmp('pwDateField').getValue().getFullYear();\nvar birthMonth = Ext.getCmp('pwDateField').getValue().getMonth() +1;\nvar birthDay = Ext.getCmp('pwDateField').getValue().getDate();\n\n\nif(Ext.getCmp('pwTypeRadio').getValue().type == 'nt'){\n    Ext.Ajax.request({\n        url: 'http://pcmsweb/resetpassword/default.asp',\n        method: 'POST',\n        params: {\n            RequestUser: Ext.getCmp('pwNtField').getValue(),\n            UserID: Ext.getCmp('pwIdField').getValue(),\n            BirthYear: birthYear,\n            BirthMonth: birthMonth,\n            BirthDay: birthDay,\n            TEL: Ext.getCmp('pwTelField').getValue(),\n            Password1: Ext.getCmp('pwField').getValue(),\n            Password2: Ext.getCmp('pwField').getValue(),\n            Action:'submit'\n        },\n        success: function(response){\n\n        }\n    });\n\n}else{\n    console.log('notes');\n    var tempComp = Ext.create('Ext.Component', {\n        html: '<iframe name=\"'+Ext.id()+'\" src=\"resetNotesPw.html\"></iframe>',\n        hidden: true,\n        renderTo: Ext.getBody()\n    });\n}",
+                                        "name": "click",
+                                        "scope": "me",
+                                        "designer|userClassName": "onPwButtonClick"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

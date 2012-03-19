@@ -1,0 +1,40 @@
+{
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*", 
+        "https://*/*"
+      ],
+	  "all_frames": true,
+      "js": [
+		"includes/invoke_async_module.js",
+		"includes/message_target_module.js",
+        "includes/content_userscript.js",
+	    "includes/content_kango.js"
+      ]
+    }
+  ], 
+  "name": "Kango", 
+  "icons": {
+    "128": "icons/icon128.png", 
+    "16": "icons/button.png",
+    "48": "icons/icon48.png"
+  }, 
+  "browser_action": {
+	"default_icon": "icons/button.png",
+	"default_title": "Kango",
+	"default_popup": "popup.html"
+  },
+  "version": "1.0.0", 
+  "background_page": "background.html", 
+  "permissions": [
+    "tabs", 
+    "http://*/*", 
+    "https://*/*",
+	"contextMenus",
+	"webNavigation"
+  ], 
+  "update_url": "",
+  "homepage_url": "", 
+  "description": "Your extension description"
+}

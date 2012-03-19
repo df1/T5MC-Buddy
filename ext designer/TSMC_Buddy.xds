@@ -1,0 +1,48 @@
+{
+    "name": "TSMC_Buddy",
+    "settings": {
+        "urlPrefix": "http://localhost/tsmc_buddy",
+        "directAPI": "",
+        "spacesToIndent": 4,
+        "codeGenFormat": "Class",
+        "exportPath": "../src/common/js/",
+        "extPath": "lib/ext-4.1-rc1/",
+        "senchaIoKey": "",
+        "senchaIoPath": "http://extjs.cachefly.net/designer/IO/",
+        "lineEnding": "CRLF",
+        "instantiateStore": true,
+        "genTimestamps": false,
+        "saveOnDeploy": false,
+        "appName": "MyApp",
+        "mapsAPI": "http://maps.google.com/maps/api/js?sensor=true",
+        "cssPath": "css/tsmc_buddy.css"
+    },
+    "xdsVersion": "2.0.0",
+    "xdsBuild": "311",
+    "framework": "ext40",
+    "topInstanceFileMap": {
+        "9392e4c7-effa-4ace-a124-0f5ac79f0888": {
+            "paths": [
+                "metadata/view/TopViewport",
+                "app/view/override/TopViewport.js",
+                "app/view/TopViewport.js",
+                "app/view/Viewport.js"
+            ],
+            "className": "TopViewport"
+        },
+        "d1ee7515-da79-47a8-b51e-b6bfad053b79": {
+            "paths": [
+                "metadata/controller/MainController",
+                "app/controller/override/MainController.js",
+                "app/controller/MainController.js"
+            ],
+            "className": "MainController"
+        }
+    },
+    "expandedState": {
+        "data": true,
+        "model": true,
+        "component": true,
+        "controller": true
+    }
+}

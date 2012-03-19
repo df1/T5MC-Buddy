@@ -1,0 +1,81 @@
+{
+    "id": "ExtBox1-ext-gen4790",
+    "type": "controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "views": [
+            "TopViewport"
+        ],
+        "designer|init": "",
+        "designer|launch": "",
+        "designer|userClassName": "MainController",
+        "designer|userAlias": "main"
+    },
+    "customConfigs": [],
+    "designerId": "d1ee7515-da79-47a8-b51e-b6bfad053b79",
+    "$viewOrder": 0,
+    "expanded": true,
+    "cn": [
+        {
+            "id": "ExtBox1-ext-gen6523",
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onCallfieldEnter",
+                "implHandler": "if(e.keyCode == e.ENTER) {\n    field.focus(true);\n    //this.onCallButtonClick();\n    this.callTsmcPhone();\n}",
+                "name": "specialkey",
+                "scope": "me",
+                "designer|targetType": "Ext.form.field.Text",
+                "designer|controlQuery": "#callPanel > field",
+                "designer|userClassName": "onCallfieldEnter"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen29414",
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onButtonClick",
+                "implHandler": "\nthis.callTsmcPhone();",
+                "name": "click",
+                "scope": "me",
+                "designer|targetType": "Ext.button.Button",
+                "designer|controlQuery": "#callPanel > button",
+                "designer|userClassName": "onButtonClick"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen5370",
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "callTsmcPhone",
+                "designer|params": null,
+                "implHandler": "if(!Ext.getCmp('callPanel').getForm().isValid()){\n    return;\n}\n\nvar from = Ext.getCmp('callFromField').getValue();\nvar to = Ext.getCmp('callFromField').getValue();\nvar wait = Ext.Msg.wait('打給'+to +'中...<br/>請拿起您的話筒');\n\nExt.Ajax.request({\n    method:'GET',\n    url: 'http://f8cmydev1.tsmc.com.tw:7091/conf/phone.do',\n    params:{\n        operation: 'createWebCallMeeting',\n        gcInputObj: Ext.encode({\n            sourcePhone: from,\n            targetPhone: to\n        })\n    },\n    success: function(response){\n        var result = Ext.decode(response.responseText);\n        var msg = '';\n        if(!Ext.isEmpty(result.resultdesc)){\n            msg = result.resultdesc;\n        }else{\n            msg = result.msg;\n        }\n        wait.hide();\n        var info = Ext.Msg.show({\n            title:'Call Result',\n            msg:msg + '<br/>' + '本訊息將於1秒後自動關閉'\n        });   \n        Ext.Function.defer(function(){\n            info.hide();\n        },2000);\n    },\n    failure: function(response){\n        var result = Ext.decode(response.responseText);\n        wait.hide();\n        Ext.Msg.alert('呼叫失敗',result.msg);\n    }\n});\n\n",
+                "designer|userClassName": "callTsmcPhone"
+            },
+            "customConfigs": [],
+            "expanded": true
+        }
+    ]
+}

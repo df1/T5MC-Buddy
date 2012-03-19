@@ -1,0 +1,12 @@
+/*
+Built using Kango - Cross-browser extension framework.
+http://kangoextensions.com/
+*/
+function KangoUIBrowserButton(details){var self=this;this._eventListener=new KangoEventTarget();safari.application.addEventListener('command',function(){self._onClicked()},false);this._initDetails(details);}
+KangoUIBrowserButton.prototype={_popupHostUrl:'kango-ui/popup.html',_popupDetails:null,_id:'kango-ui-button',_eventListener:null,_getButton:function(){var items=safari.extension.toolbarItems;for(var i=0;i<items.length;i++){if(items[i].identifier==this._id){return items[i];}}
+return null;},event:{Command:'command'},setTooltipText:function(text){this._getButton().toolTip=text.replace(/\n/g,'; ').replace(/\r/g,'');},setCaption:function(text){},setIcon:function(url){this._getButton().image=safari.extension.baseURI+url;},setBadgeValue:function(val){if(val!=null){this._getButton().badge=parseInt(val,10);}},setBadgeBackgroundColor:function(color){},setPopup:function(details){this._popupDetails=details;var button=this._getButton();if(details!=null&&kango.lang.isString(details.url)){if(button.popover==null){var popup=safari.extension.createPopover('kango-ui-popup',safari.extension.baseURI+this._popupHostUrl,details.width,details.height);button.popover=popup;}
+button.command=null;button.popover.width=details.width;button.popover.height=details.height+4;}
+else{button.popover=null;safari.extension.removePopover('kango-ui-popup');button.command='KangoButtonCommand';}},closePopup:function(){var button=this._getButton();if(button!=null&&button.popover!=null){button.popover.hide();}},getPopupDetails:function(){return this._popupDetails;},setContextMenu:function(){},addEventListener:function(name,callback){return this._eventListener.addEventListener(name,callback);},removeEventListener:function(name,callback){return this._eventListener.removeEventListener(name,callback);},_onClicked:function(){return this._eventListener.fireEvent(this.event.Command);},_initDetails:function(details){if(kango.lang.isObject(details)){if(kango.lang.isString(details.icon)){this.setIcon(details.icon);}
+if(kango.lang.isString(details.caption)){this.setCaption(details.caption);}
+if(kango.lang.isString(details.tooltipText)){this.setTooltipText(details.tooltipText);}
+if(kango.lang.isObject(details.popup)){this.setPopup(details.popup);}}}};

@@ -1,0 +1,9 @@
+/*
+Built using Kango - Cross-browser extension framework.
+http://kangoextensions.com/
+*/
+function KangoUIBrowserButton(details){var self=this;this._eventListener=new KangoEventTarget();chrome.browserAction.onClicked.addListener(function(){self._onClicked();});this._initDetails(details);}
+KangoUIBrowserButton.prototype={_eventListener:null,_popupHostUrl:'kango-ui/popup.html',_popupDetails:null,event:{Command:'command'},setTooltipText:function(text){chrome.browserAction.setTitle({title:text.toString()});},setCaption:function(text){},setIcon:function(url){if(url.indexOf(kango.SCHEME)==0||url.indexOf('http://')!=0||url.indexOf('https://')!=0){var path=url.replace(kango.SCHEME,'');chrome.browserAction.setIcon({path:path});}},setBadgeValue:function(val){chrome.browserAction.setBadgeText({text:(val!=null&&val!=0)?val.toString():''});},setBadgeBackgroundColor:function(color){},setPopup:function(details){this._popupDetails=details;chrome.browserAction.setPopup({popup:(details!=null&&kango.lang.isString(details.url))?this._popupHostUrl:''});},getPopupDetails:function(){return this._popupDetails;},addEventListener:function(name,callback){return this._eventListener.addEventListener(name,callback);},removeEventListener:function(name,callback){return this._eventListener.removeEventListener(name,callback);},setContextMenu:function(){},_onClicked:function(){return this._eventListener.fireEvent(this.event.Command);},_initDetails:function(details){if(kango.lang.isObject(details)){if(kango.lang.isString(details.icon)){this.setIcon(details.icon);}
+if(kango.lang.isString(details.caption)){this.setCaption(details.caption);}
+if(kango.lang.isString(details.tooltipText)){this.setTooltipText(details.tooltipText);}
+if(kango.lang.isObject(details.popup)){this.setPopup(details.popup);}}}};
