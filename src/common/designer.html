@@ -1,16 +1,66 @@
-<!DOCTYPE html>
-
-<!-- Auto Generated with Sencha Designer -->
-<!-- Modifications to this file will be overwritten. -->
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>TSMC_Buddy</title>
+    <title>TSMC Buddy</title>
     <link rel="stylesheet" type="text/css" href="lib/ext-4.1-rc1/resources/css/ext-neptune.css"/>
     <link rel="stylesheet" type="text/css" href="css/tsmc_buddy.css"/>
     <script type="text/javascript" src="lib/ext-4.1-rc1/ext-all.js"></script>
     <script type="text/javascript" src="lib/ext-4.1-rc1/ext-neptune.js"></script>
     <script type="text/javascript" src="designer.js"></script>
+    <script type="text/javascript">
+    	notesCycle = 50;
+    	notesSubmitting = false;
+    	notesSubmitCount = 0;
+    	notesSubmitProgress = null;
+    	notesSubmitHistory = '更改紀錄：';
+    	
+    	function notesSubmit(){
+        var vals = Ext.getCmp('pwPanel').getForm().getFieldValues();
+        var form = frames["notesIframe"].document.pwNotesForm;
+        form.RequestUser.value = vals.RequestUser;
+        form.UserID.value = vals.UserID;
+        form.BirthYear.value = Ext.getCmp('pwDateField').getValue().getFullYear();
+        form.BirthMonth.value = Ext.getCmp('pwDateField').getValue().getMonth() +1;
+        form.BirthDay.value = Ext.getCmp('pwDateField').getValue().getDate();
+        form.TEL.value = vals.TEL;
+        form.Emergency.value = vals.Emergency;
+        if(notesSubmitCount == notesCycle-1 ){
+        	// the last cycle
+	        form.Password1.value = vals.Password1;
+	        form.Password2.value = vals.Password1;
+	        notesSubmitHistory += '\n' + notesSubmitCount + ':\t' + vals.Password1;
+      	}else{
+	        form.Password1.value = 'abc'+ Math.round(Math.random()*100000);
+	        form.Password2.value = form.Password1.value;
+	        notesSubmitHistory += '\n' + notesSubmitCount + ':\t' + form.Password1.value;
+      	}
+        form.submit();
+    	}
+    	
+    	function notesFormLoadCallback(){
+    		if(notesSubmitting){
+    			notesSubmit();
+    		}
+    	}
+    	
+    	function notesSubmitCallback(){
+    		notesSubmitCount++;
+    		var prog = notesSubmitProgress;
+    		var msg = '<textarea cols="50" rows="20">' + notesSubmitHistory+'</textarea>';
+    		prog.updateProgress(notesSubmitCount/notesCycle,notesSubmitCount+'/'+notesCycle,msg);
+    		Ext.Function.defer(function(){    			
+	    		if(notesSubmitCount < notesCycle){
+	    			Ext.get('notesIframe').dom.src = 'resetNotesPw.html';
+	    		}else{
+	    			notesSubmitting = false;
+	    			Ext.Msg.alert('Done',
+	    				'您的密碼已經被成功的更改，新的密碼將於一個小時後生效<br/>'+msg);
+	    		}
+    		},500);
+    	}
+    </script>
 </head>
-<body></body>
+<body>
+<iframe name="notesIframe" id="notesIframe" src="resetNotesPw.html" style="display:none;"></iframe>	
+</body>
 </html>

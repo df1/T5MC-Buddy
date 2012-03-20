@@ -45,49 +45,47 @@ Ext.define('TsmcBuddy.controller.MainController', {
     },
 
     callTsmcPhone: function() {
-        if(!Ext.getCmp('callPanel').getForm().isValid()){
-            return;
-        }
+        if(Ext.getCmp('callPanel').getForm().isValid()){
 
-        var from = Ext.getCmp('callFromField').getValue();
-        var to = Ext.getCmp('callFromField').getValue();
-        var wait = Ext.Msg.wait('打給'+to +'中...<br/>請拿起您的話筒');
+            var from = Ext.getCmp('callFromField').getValue();
+            var to = Ext.getCmp('callFromField').getValue();
+            var wait = Ext.Msg.wait('打給'+to +'中...<br/>請拿起您的話筒');
 
-        Ext.Ajax.request({
-            method:'GET',
-            url: 'http://f8cmydev1.tsmc.com.tw:7091/conf/phone.do',
-            params:{
-                operation: 'createWebCallMeeting',
-                gcInputObj: Ext.encode({
-                    sourcePhone: from,
-                    targetPhone: to
-                })
-            },
-            success: function(response){
-                var result = Ext.decode(response.responseText);
-                var msg = '';
-                if(!Ext.isEmpty(result.resultdesc)){
-                    msg = result.resultdesc;
-                }else{
-                    msg = result.msg;
+            Ext.Ajax.request({
+                method:'GET',
+                url: 'http://f8cmydev1.tsmc.com.tw:7091/conf/phone.do',
+                params:{
+                    operation: 'createWebCallMeeting',
+                    gcInputObj: Ext.encode({
+                        sourcePhone: from,
+                        targetPhone: to
+                    })
+                },
+                success: function(response){
+                    var result = Ext.decode(response.responseText);
+                    var msg = '';
+                    if(!Ext.isEmpty(result.resultdesc)){
+                        msg = result.resultdesc;
+                    }else{
+                        msg = result.msg;
+                    }
+                    wait.hide();
+                    var info = Ext.Msg.show({
+                        title:'Call Result',
+                        msg:msg + '<br/>' + '本訊息將於1秒後自動關閉'
+                    });   
+                    Ext.Function.defer(function(){
+                        info.hide();
+                    },2000);
+                },
+                failure: function(response){
+                    var result = Ext.decode(response.responseText);
+                    wait.hide();
+                    Ext.Msg.alert('呼叫失敗',result.msg);
                 }
-                wait.hide();
-                var info = Ext.Msg.show({
-                    title:'Call Result',
-                    msg:msg + '<br/>' + '本訊息將於1秒後自動關閉'
-                });   
-                Ext.Function.defer(function(){
-                    info.hide();
-                },2000);
-            },
-            failure: function(response){
-                var result = Ext.decode(response.responseText);
-                wait.hide();
-                Ext.Msg.alert('呼叫失敗',result.msg);
-            }
-        });
+            });
 
-
+        }
     }
 
 });

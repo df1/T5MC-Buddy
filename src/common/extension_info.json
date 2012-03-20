@@ -1,16 +1,19 @@
 {
   "content_scripts": [], 
+  "background_scripts": ["background.js"],
   "homepage_url": "https://github.com/df1/TSMC-Buddy", 
   "version": "0.1", 
   "name": "TSMC Buddy", 
-  "creator": "df1", 
-  "background_scripts": [
-    "main.js"
-  ], 
+  "creator": "df1",
   "browser_button": {
     "caption": "TSMC Buddy", 
     "tooltipText": "TSMC Buddy", 
-    "icon": "icons/icon19.png"
+    "icon": "icons/icon19.png",
+    "popup": {
+	  "url": "designer.html",
+	  "width": 320,
+	  "height": 500
+     }
   }, 
-  "description": "Extension description"
+  "description": "Boost your productivity in TSMC"
 }

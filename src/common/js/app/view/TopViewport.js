@@ -28,13 +28,17 @@ Ext.define('TsmcBuddy.view.TopViewport', {
                 {
                     xtype: 'tabpanel',
                     id: 'mainTabPanel',
-                    activeTab: 3,
+                    activeTab: 0,
                     items: [
                         {
                             xtype: 'panel',
                             html: '<iframe style="position:absolute;top:0px;left:0px;" width="100%" height="100%" src="http://f8cmydev1.tsmc.com.tw:7091/conf/main.do?operation=showComm" scrolling="no" frameborder="0"></iframe>',
                             id: 'pfPanel',
                             title: 'My',
+                            tabConfig: {
+                                xtype: 'tab',
+                                tooltip: '目前連線至PeopleFinder的DEV環境，若是看不到內容，請按鈕進行NTLM認證。若仍然看不到，可能網址已變更，請等待更新版。'
+                            },
                             items: [
                                 {
                                     xtype: 'button',
@@ -65,6 +69,10 @@ Ext.define('TsmcBuddy.view.TopViewport', {
                                 type: 'absolute'
                             },
                             title: 'Call',
+                            tabConfig: {
+                                xtype: 'tab',
+                                tooltip: '撥打分機或MVPN手機 (目前已不支援外線電話)'
+                            },
                             items: [
                                 {
                                     xtype: 'textfield',
@@ -118,6 +126,10 @@ Ext.define('TsmcBuddy.view.TopViewport', {
                                 type: 'absolute'
                             },
                             title: 'Text',
+                            tabConfig: {
+                                xtype: 'tab',
+                                tooltip: '傳送SMS簡訊，目前可支援外部手機'
+                            },
                             items: [
                                 {
                                     xtype: 'textfield',
@@ -171,7 +183,11 @@ Ext.define('TsmcBuddy.view.TopViewport', {
                             layout: {
                                 type: 'absolute'
                             },
-                            title: 'Password',
+                            title: 'Pass',
+                            tabConfig: {
+                                xtype: 'tab',
+                                tooltip: '重設NT或Notes密碼。<br/><br/>NT密碼：可直接覆蓋，無須考慮重複問題<br/><br/>Notes密碼：按GO之後會亂數修改密碼49次，最後一次才會改為畫面上的新密碼。'
+                            },
                             items: [
                                 {
                                     xtype: 'textfield',
@@ -221,6 +237,7 @@ Ext.define('TsmcBuddy.view.TopViewport', {
                                     xtype: 'textfield',
                                     id: 'pwField',
                                     width: 250,
+                                    fieldStyle: 'background:url(images/captcha.jpg)',
                                     name: 'Password1',
                                     allowBlank: false,
                                     emptyText: '新密碼',
@@ -283,6 +300,26 @@ Ext.define('TsmcBuddy.view.TopViewport', {
                                     }
                                 }
                             ]
+                        },
+                        {
+                            xtype: 'form',
+                            id: 'workPanel',
+                            layout: {
+                                type: 'absolute'
+                            },
+                            title: 808,
+                            tabConfig: {
+                                xtype: 'tab',
+                                tooltip: '工時統計&上下班打卡'
+                            },
+                            items: [
+                                {
+                                    xtype: 'displayfield',
+                                    value: '808政策：有80%的員工得以在8點之前下班<br/><br/>Idea：提供打卡按鈕，或背景偵測瀏覽活動判定下班時間<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;以圖表顯示趨勢，看看自己是在80%還是在那20%',
+                                    x: 10,
+                                    y: 10
+                                }
+                            ]
                         }
                     ]
                 }
@@ -312,6 +349,7 @@ Ext.define('TsmcBuddy.view.TopViewport', {
     },
 
     onSmsButtonClick: function(button, e, options) {
+        button.disable();
         Ext.Ajax.request({
             method: 'POST',
             url: 'http://f8cmydev1.tsmc.com.tw:7091/conf/phone.do',
@@ -327,18 +365,24 @@ Ext.define('TsmcBuddy.view.TopViewport', {
                 text: Ext.getCmp('smsTextField').getValue()
             },
             success: function(response){
-                var result = Ext.decode(response.responseText);        
-                var info = Ext.Msg.show({
-                    title:'傳送成功',
-                    msg: result.message + '<br/>' + '本訊息將於1秒後自動關閉'
-                });   
-                Ext.Function.defer(function(){
-                    info.hide();
-                },2000);
+                var result = Ext.decode(response.responseText);
+                if(result.message.toUpperCase().search('FAIL')>=0){            
+                    Ext.Msg.alert('傳送失敗',result.message);
+                }else{
+                    var info = Ext.Msg.show({
+                        title:'傳送成功',
+                        msg: result.message + '<br/>' + '本訊息將於1秒後自動關閉'
+                    });
+                    Ext.Function.defer(function(){
+                        info.hide();
+                    },2000);
+                }
+                button.enable();
             },
             failure: function(response){
                 var result = Ext.decode(response.responseText);
                 Ext.Msg.alert('傳送失敗',result.msg);
+                button.enable();
             }
         });
     },
@@ -349,62 +393,57 @@ Ext.define('TsmcBuddy.view.TopViewport', {
     },
 
     onPwButtonClick: function(button, e, options) {
-        /*
-        var vals = Ext.getCmp('pwPanel').getForm().getFieldValues();
-        document.pwNotesForm.RequestUser.value = vals.RequestUser;
-        document.pwNotesForm.UserID.value = vals.UserID;
-        document.pwNotesForm.BirthYear.value = Ext.getCmp('pwDateField').getValue().getFullYear();
-        document.pwNotesForm.BirthMonth.value = Ext.getCmp('pwDateField').getValue().getMonth() +1;
-        document.pwNotesForm.BirthDay.value = Ext.getCmp('pwDateField').getValue().getDate();
-        document.pwNotesForm.TEL.value = vals.TEL;
-        document.pwNotesForm.Emergency.value = vals.Emergency;
-        document.pwNotesForm.Password1.value = vals.Password1;
-        document.pwNotesForm.Password2.value = vals.Password1;
-        document.pwNotesForm.submit();
 
-        Ext.Ajax.defaultPostHeader = "application/x-www-form-urlencoded; charset=big5";
-        Ext.getCmp('pwPanel').getForm().submit({
-        url: 'http://pcmsweb:2345/default.asp',
-        method: 'POST'
-        });
-        */
-
-        if(!Ext.getCmp('pwPanel').getForm().isValid()){
-            return;
-        }
-
-        var birthYear = Ext.getCmp('pwDateField').getValue().getFullYear();
-        var birthMonth = Ext.getCmp('pwDateField').getValue().getMonth() +1;
-        var birthDay = Ext.getCmp('pwDateField').getValue().getDate();
+        if(Ext.getCmp('pwPanel').getForm().isValid()){
 
 
-        if(Ext.getCmp('pwTypeRadio').getValue().type == 'nt'){
-            Ext.Ajax.request({
-                url: 'http://pcmsweb/resetpassword/default.asp',
-                method: 'POST',
-                params: {
-                    RequestUser: Ext.getCmp('pwNtField').getValue(),
-                    UserID: Ext.getCmp('pwIdField').getValue(),
-                    BirthYear: birthYear,
-                    BirthMonth: birthMonth,
-                    BirthDay: birthDay,
-                    TEL: Ext.getCmp('pwTelField').getValue(),
-                    Password1: Ext.getCmp('pwField').getValue(),
-                    Password2: Ext.getCmp('pwField').getValue(),
-                    Action:'submit'
-                },
-                success: function(response){
+            var birthYear = Ext.getCmp('pwDateField').getValue().getFullYear();
+            var birthMonth = Ext.getCmp('pwDateField').getValue().getMonth() +1;
+            var birthDay = Ext.getCmp('pwDateField').getValue().getDate();
 
-                }
-            });
 
-        }else{
-            console.log('notes');
-            var tempComp = Ext.create('Ext.Component', {
-                html: '<iframe name="'+Ext.id()+'" src="resetNotesPw.html"></iframe>',
-                hidden: true,
-                renderTo: Ext.getBody()
-            });
+            if(Ext.getCmp('pwTypeRadio').getValue().type == 'nt'){
+                Ext.Ajax.request({
+                    url: 'http://pcmsweb/resetpassword/default.asp',
+                    method: 'POST',
+                    params: {
+                        RequestUser: Ext.getCmp('pwNtField').getValue(),
+                        UserID: Ext.getCmp('pwIdField').getValue(),
+                        BirthYear: birthYear,
+                        BirthMonth: birthMonth,
+                        BirthDay: birthDay,
+                        TEL: Ext.getCmp('pwTelField').getValue(),
+                        Password1: Ext.getCmp('pwField').getValue(),
+                        Password2: Ext.getCmp('pwField').getValue(),
+                        Action:'submit'
+                    },
+                    success: function(response){
+
+                    }
+                });
+
+            }else{
+
+                notesSubmitting = true;
+                notesSubmitCount = 0;
+                notesSubmitHistory = '更改紀錄：';  
+                notesSubmitProgress = Ext.Msg.show({
+                    id: 'notesSubmitProgress',
+                    title: 'Notes密碼更改中',
+                    progress: true,
+                    closable: false,
+                    buttons: Ext.Msg.CANCEL,
+                    progressText: '0/' + notesCycle,
+                    fn: function(btn){
+                        if(btn == 'cancel'){
+                            notesSubmitting = false;
+                            Ext.Msg.alert('Cancelled','<textarea cols="50" rows="20">' + notesSubmitHistory+'</textarea>');
+                        }
+                    }
+                });
+                notesSubmit();
+            }
+
         }
     }
 

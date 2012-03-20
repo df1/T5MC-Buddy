@@ -26,7 +26,7 @@
             "codeClass": null,
             "userConfig": {
                 "id": "mainTabPanel",
-                "activeTab": 3,
+                "activeTab": 0,
                 "designer|userClassName": "MyTabPanel"
             },
             "customConfigs": [],
@@ -58,6 +58,8 @@
                             },
                             "codeClass": null,
                             "userConfig": {
+                                "tooltip": "目前連線至PeopleFinder的DEV環境，若是看不到內容，請按鈕進行NTLM認證。若仍然看不到，可能網址已變更，請等待更新版。",
+                                "tooltipType": null,
                                 "designer|userClassName": "TabConfig"
                             },
                             "customConfigs": [],
@@ -149,6 +151,7 @@
                             },
                             "codeClass": null,
                             "userConfig": {
+                                "tooltip": "撥打分機或MVPN手機 (目前已不支援外線電話)",
                                 "designer|userClassName": "TabConfig1"
                             },
                             "customConfigs": [],
@@ -260,6 +263,7 @@
                             },
                             "codeClass": null,
                             "userConfig": {
+                                "tooltip": "傳送SMS簡訊，目前可支援外部手機",
                                 "designer|userClassName": "TabConfig2"
                             },
                             "customConfigs": [],
@@ -357,7 +361,7 @@
                                     "codeClass": null,
                                     "userConfig": {
                                         "fn": "onSmsButtonClick",
-                                        "implHandler": "Ext.Ajax.request({\n    method: 'POST',\n    url: 'http://f8cmydev1.tsmc.com.tw:7091/conf/phone.do',\n    params:{\n        operation: 'sendSms',\n        sender: Ext.getCmp('smsBylineField').getValue(),\n        sendSmsObjArry:Ext.encode([{\n            \"id\":\"\",\n            \"ntAccount\":\"\",\n            \"phone\": Ext.getCmp('smsDestField').getValue(),\n            \"name\":\"test\",\n        \"isMvpn\":1}]),\n        text: Ext.getCmp('smsTextField').getValue()\n    },\n    success: function(response){\n        var result = Ext.decode(response.responseText);        \n        var info = Ext.Msg.show({\n            title:'傳送成功',\n            msg: result.message + '<br/>' + '本訊息將於1秒後自動關閉'\n        });   \n        Ext.Function.defer(function(){\n            info.hide();\n        },2000);\n    },\n    failure: function(response){\n        var result = Ext.decode(response.responseText);\n        Ext.Msg.alert('傳送失敗',result.msg);\n    }\n});",
+                                        "implHandler": "button.disable();\nExt.Ajax.request({\n    method: 'POST',\n    url: 'http://f8cmydev1.tsmc.com.tw:7091/conf/phone.do',\n    params:{\n        operation: 'sendSms',\n        sender: Ext.getCmp('smsBylineField').getValue(),\n        sendSmsObjArry:Ext.encode([{\n            \"id\":\"\",\n            \"ntAccount\":\"\",\n            \"phone\": Ext.getCmp('smsDestField').getValue(),\n            \"name\":\"test\",\n        \"isMvpn\":1}]),\n        text: Ext.getCmp('smsTextField').getValue()\n    },\n    success: function(response){\n        var result = Ext.decode(response.responseText);\n        if(result.message.toUpperCase().search('FAIL')>=0){            \n            Ext.Msg.alert('傳送失敗',result.message);\n        }else{\n            var info = Ext.Msg.show({\n                title:'傳送成功',\n                msg: result.message + '<br/>' + '本訊息將於1秒後自動關閉'\n            });\n            Ext.Function.defer(function(){\n                info.hide();\n            },2000);\n        }\n        button.enable();\n    },\n    failure: function(response){\n        var result = Ext.decode(response.responseText);\n        Ext.Msg.alert('傳送失敗',result.msg);\n        button.enable();\n    }\n});",
                                         "name": "click",
                                         "scope": "me",
                                         "designer|userClassName": "onSmsButtonClick"
@@ -380,12 +384,12 @@
                     "userConfig": {
                         "id": "pwPanel",
                         "layout": "absolute",
-                        "title": "Password",
+                        "title": "Pass",
                         "designer|userClassName": "MyForm",
                         "designer|snapToGrid": 10
                     },
                     "customConfigs": [],
-                    "expanded": true,
+                    "expanded": false,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen4330",
@@ -396,6 +400,7 @@
                             },
                             "codeClass": null,
                             "userConfig": {
+                                "tooltip": "重設NT或Notes密碼。<br/><br/>NT密碼：可直接覆蓋，無須考慮重複問題<br/><br/>Notes密碼：按GO之後會亂數修改密碼49次，最後一次才會改為畫面上的新密碼。",
                                 "designer|userClassName": "TabConfig2"
                             },
                             "customConfigs": [],
@@ -507,7 +512,9 @@
                             "codeClass": null,
                             "userConfig": {
                                 "id": "pwField",
+                                "style": null,
                                 "width": 250,
+                                "fieldStyle": "background:url(images/captcha.jpg)",
                                 "name": "Password1",
                                 "value": null,
                                 "fieldLabel": null,
@@ -657,7 +664,7 @@
                                     "codeClass": null,
                                     "userConfig": {
                                         "fn": "onPwButtonClick",
-                                        "implHandler": "/*\nvar vals = Ext.getCmp('pwPanel').getForm().getFieldValues();\ndocument.pwNotesForm.RequestUser.value = vals.RequestUser;\ndocument.pwNotesForm.UserID.value = vals.UserID;\ndocument.pwNotesForm.BirthYear.value = Ext.getCmp('pwDateField').getValue().getFullYear();\ndocument.pwNotesForm.BirthMonth.value = Ext.getCmp('pwDateField').getValue().getMonth() +1;\ndocument.pwNotesForm.BirthDay.value = Ext.getCmp('pwDateField').getValue().getDate();\ndocument.pwNotesForm.TEL.value = vals.TEL;\ndocument.pwNotesForm.Emergency.value = vals.Emergency;\ndocument.pwNotesForm.Password1.value = vals.Password1;\ndocument.pwNotesForm.Password2.value = vals.Password1;\ndocument.pwNotesForm.submit();\n\nExt.Ajax.defaultPostHeader = \"application/x-www-form-urlencoded; charset=big5\";\nExt.getCmp('pwPanel').getForm().submit({\nurl: 'http://pcmsweb:2345/default.asp',\nmethod: 'POST'\n});\n*/\n\nif(!Ext.getCmp('pwPanel').getForm().isValid()){\n    return;\n}\n\nvar birthYear = Ext.getCmp('pwDateField').getValue().getFullYear();\nvar birthMonth = Ext.getCmp('pwDateField').getValue().getMonth() +1;\nvar birthDay = Ext.getCmp('pwDateField').getValue().getDate();\n\n\nif(Ext.getCmp('pwTypeRadio').getValue().type == 'nt'){\n    Ext.Ajax.request({\n        url: 'http://pcmsweb/resetpassword/default.asp',\n        method: 'POST',\n        params: {\n            RequestUser: Ext.getCmp('pwNtField').getValue(),\n            UserID: Ext.getCmp('pwIdField').getValue(),\n            BirthYear: birthYear,\n            BirthMonth: birthMonth,\n            BirthDay: birthDay,\n            TEL: Ext.getCmp('pwTelField').getValue(),\n            Password1: Ext.getCmp('pwField').getValue(),\n            Password2: Ext.getCmp('pwField').getValue(),\n            Action:'submit'\n        },\n        success: function(response){\n\n        }\n    });\n\n}else{\n    console.log('notes');\n    var tempComp = Ext.create('Ext.Component', {\n        html: '<iframe name=\"'+Ext.id()+'\" src=\"resetNotesPw.html\"></iframe>',\n        hidden: true,\n        renderTo: Ext.getBody()\n    });\n}",
+                                        "implHandler": "\nif(Ext.getCmp('pwPanel').getForm().isValid()){\n\n\n    var birthYear = Ext.getCmp('pwDateField').getValue().getFullYear();\n    var birthMonth = Ext.getCmp('pwDateField').getValue().getMonth() +1;\n    var birthDay = Ext.getCmp('pwDateField').getValue().getDate();\n\n\n    if(Ext.getCmp('pwTypeRadio').getValue().type == 'nt'){\n        Ext.Ajax.request({\n            url: 'http://pcmsweb/resetpassword/default.asp',\n            method: 'POST',\n            params: {\n                RequestUser: Ext.getCmp('pwNtField').getValue(),\n                UserID: Ext.getCmp('pwIdField').getValue(),\n                BirthYear: birthYear,\n                BirthMonth: birthMonth,\n                BirthDay: birthDay,\n                TEL: Ext.getCmp('pwTelField').getValue(),\n                Password1: Ext.getCmp('pwField').getValue(),\n                Password2: Ext.getCmp('pwField').getValue(),\n                Action:'submit'\n            },\n            success: function(response){\n\n            }\n        });\n\n    }else{\n\n        notesSubmitting = true;\n        notesSubmitCount = 0;\n        notesSubmitHistory = '更改紀錄：';  \n        notesSubmitProgress = Ext.Msg.show({\n            id: 'notesSubmitProgress',\n            title: 'Notes密碼更改中',\n            progress: true,\n            closable: false,\n            buttons: Ext.Msg.CANCEL,\n            progressText: '0/' + notesCycle,\n            fn: function(btn){\n                if(btn == 'cancel'){\n                    notesSubmitting = false;\n                    Ext.Msg.alert('Cancelled','<textarea cols=\"50\" rows=\"20\">' + notesSubmitHistory+'</textarea>');\n                }\n            }\n        });\n        notesSubmit();\n    }\n\n}",
                                         "name": "click",
                                         "scope": "me",
                                         "designer|userClassName": "onPwButtonClick"
@@ -666,6 +673,59 @@
                                     "expanded": true
                                 }
                             ]
+                        }
+                    ]
+                },
+                {
+                    "id": "ExtBox1-ext-gen9025",
+                    "type": "form",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "id": "workPanel",
+                        "layout": "absolute",
+                        "title": 808,
+                        "designer|userClassName": "MyForm1",
+                        "designer|snapToGrid": 10
+                    },
+                    "customConfigs": [],
+                    "expanded": true,
+                    "cn": [
+                        {
+                            "id": "ExtBox1-ext-gen9030",
+                            "type": "tab",
+                            "reference": {
+                                "name": "tabConfig",
+                                "type": "object"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "tooltip": "工時統計&上下班打卡",
+                                "designer|userClassName": "TabConfig1"
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen11215",
+                            "type": "displayfield",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "value": "808政策：有80%的員工得以在8點之前下班<br/><br/>Idea：提供打卡按鈕，或背景偵測瀏覽活動判定下班時間<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;以圖表顯示趨勢，看看自己是在80%還是在那20%",
+                                "fieldLabel": null,
+                                "designer|userClassName": "MyDisplayField",
+                                "layout|x": 10,
+                                "layout|y": 10
+                            },
+                            "customConfigs": [],
+                            "expanded": true
                         }
                     ]
                 }

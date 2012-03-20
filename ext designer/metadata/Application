@@ -9,7 +9,6 @@
     "userConfig": {
         "views": [],
         "designer|launch": "",
-        "appFolder": null,
         "autoCreateViewport": true,
         "name": "TsmcBuddy"
     },
