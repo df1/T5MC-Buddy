@@ -1,20 +1,12 @@
 # Compiled source #
 ###################
-/output
+/output/chrome
+/output/firefox
+/output/opera
+/output/safari
 
 # Packages #
 ############
-*.7z
-*.dmg
-*.gz
-*.iso
-*.jar
-*.rar
-*.tar
-*.zip
-*.crx
-*.oex
-*.xpi
 
 # Logs and databases #
 ######################

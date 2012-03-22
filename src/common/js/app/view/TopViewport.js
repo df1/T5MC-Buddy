@@ -28,7 +28,7 @@ Ext.define('TsmcBuddy.view.TopViewport', {
                 {
                     xtype: 'tabpanel',
                     id: 'mainTabPanel',
-                    activeTab: 0,
+                    activeTab: 3,
                     items: [
                         {
                             xtype: 'panel',
@@ -212,6 +212,23 @@ Ext.define('TsmcBuddy.view.TopViewport', {
                                     y: 70
                                 },
                                 {
+                                    xtype: 'datefield',
+                                    id: 'pwDateField',
+                                    width: 250,
+                                    allowBlank: false,
+                                    emptyText: '出生年月日',
+                                    format: 'Y/m/d',
+                                    showToday: false,
+                                    x: 10,
+                                    y: 100,
+                                    listeners: {
+                                        expand: {
+                                            fn: me.onDatefieldExpand,
+                                            scope: me
+                                        }
+                                    }
+                                },
+                                {
                                     xtype: 'textfield',
                                     id: 'pwTelField',
                                     width: 250,
@@ -245,23 +262,6 @@ Ext.define('TsmcBuddy.view.TopViewport', {
                                     y: 190
                                 },
                                 {
-                                    xtype: 'datefield',
-                                    id: 'pwDateField',
-                                    width: 250,
-                                    allowBlank: false,
-                                    emptyText: '出生年月日',
-                                    format: 'Y/m/d',
-                                    showToday: false,
-                                    x: 10,
-                                    y: 100,
-                                    listeners: {
-                                        expand: {
-                                            fn: me.onDatefieldExpand,
-                                            scope: me
-                                        }
-                                    }
-                                },
-                                {
                                     xtype: 'radiogroup',
                                     id: 'pwTypeRadio',
                                     width: 310,
@@ -283,7 +283,13 @@ Ext.define('TsmcBuddy.view.TopViewport', {
                                             checked: true,
                                             inputValue: 'nt'
                                         }
-                                    ]
+                                    ],
+                                    listeners: {
+                                        change: {
+                                            fn: me.onPwTypeRadioChange,
+                                            scope: me
+                                        }
+                                    }
                                 },
                                 {
                                     xtype: 'button',
@@ -314,14 +320,98 @@ Ext.define('TsmcBuddy.view.TopViewport', {
                             },
                             items: [
                                 {
-                                    xtype: 'displayfield',
-                                    value: '808政策：有80%的員工得以在8點之前下班<br/><br/>Idea：提供打卡按鈕，或背景偵測瀏覽活動判定下班時間<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;以圖表顯示趨勢，看看自己是在80%還是在那20%',
+                                    xtype: 'timefield',
+                                    id: 'workTimeField',
+                                    width: 300,
+                                    value: new Date(),
+                                    fieldLabel: '最後活動時間',
+                                    labelWidth: 90,
+                                    increment: 10,
                                     x: 10,
                                     y: 10
+                                },
+                                {
+                                    xtype: 'button',
+                                    height: 30,
+                                    id: 'checkOutBtn',
+                                    width: 300,
+                                    text: '下班打卡',
+                                    x: 10,
+                                    y: 40,
+                                    listeners: {
+                                        click: {
+                                            fn: me.onCheckOutBtnClick,
+                                            scope: me
+                                        }
+                                    }
+                                },
+                                {
+                                    xtype: 'button',
+                                    height: 30,
+                                    id: 'logBtn',
+                                    width: 300,
+                                    text: '查看打卡記錄',
+                                    x: 10,
+                                    y: 80,
+                                    listeners: {
+                                        click: {
+                                            fn: me.onLogBtnClick,
+                                            scope: me
+                                        }
+                                    }
+                                },
+                                {
+                                    xtype: 'textareafield',
+                                    height: 130,
+                                    hidden: true,
+                                    id: 'workHourText',
+                                    width: 300,
+                                    x: 10,
+                                    y: 340
+                                },
+                                {
+                                    xtype: 'chart',
+                                    height: 230,
+                                    id: 'workHourChart',
+                                    width: 330,
+                                    animate: true,
+                                    store: 'WorkHourStore',
+                                    x: -5,
+                                    y: 110,
+                                    series: [
+                                        {
+                                            type: 'line',
+                                            xField: 'date',
+                                            yField: [
+                                                'time'
+                                            ],
+                                            smooth: 3
+                                        }
+                                    ],
+                                    axes: [
+                                        {
+                                            type: 'Time',
+                                            fields: [
+                                                'time'
+                                            ],
+                                            position: 'left',
+                                            dateFormat: 'gA',
+                                            step: [
+                                                'h',
+                                                1
+                                            ]
+                                        }
+                                    ]
                                 }
                             ]
                         }
-                    ]
+                    ],
+                    listeners: {
+                        tabchange: {
+                            fn: me.onMainTabPanelTabChange,
+                            scope: me
+                        }
+                    }
                 }
             ]
         });
@@ -392,6 +482,18 @@ Ext.define('TsmcBuddy.view.TopViewport', {
         field.getPicker().showMonthPicker();
     },
 
+    onPwTypeRadioChange: function(field, newValue, oldValue, options) {
+        if(newValue.type == 'notes'){
+            Ext.Msg.confirm('Confirm',
+            '此功能需要花費較長時間，是否開啟新視窗以避免不小心按掉？',
+            function(btn){
+                if(btn=='yes'){
+                    window.open('designer.html');
+                }
+            });
+        }
+    },
+
     onPwButtonClick: function(button, e, options) {
 
         if(Ext.getCmp('pwPanel').getForm().isValid()){
@@ -430,6 +532,7 @@ Ext.define('TsmcBuddy.view.TopViewport', {
                 notesSubmitProgress = Ext.Msg.show({
                     id: 'notesSubmitProgress',
                     title: 'Notes密碼更改中',
+                    msg: '請耐心等候，勿關閉視窗',
                     progress: true,
                     closable: false,
                     buttons: Ext.Msg.CANCEL,
@@ -445,6 +548,75 @@ Ext.define('TsmcBuddy.view.TopViewport', {
             }
 
         }
+    },
+
+    onCheckOutBtnClick: function(button, e, options) {
+
+        var dateStr = Ext.util.Format.date(new Date(),'Y/m/d');
+        var timeStr = Ext.util.Format.date(Ext.getCmp('workTimeField').getValue(),'H:i');
+
+        if(timeStr.split(':')[0] < 8){
+            var today = new Date();
+            today.setDate(today.getDate()-1);
+            var yesterday = Ext.util.Format.date(today,'Y/m/d');
+            Ext.Msg.confirm('太晚下班了吧',
+            '如果要算在'+yesterday+'請按Yes，<br/>要算在'+dateStr+'請按No。',
+            function(btn){
+                if(btn=='yes'){
+                    dateStr = yesterday;
+                }
+                doCheckOut();
+            });
+        }else{
+            doCheckOut();
+        }
+
+        function doCheckOut(){
+            kango.invokeAsync('kango.storage.getItem', 'work_log', function(data) {
+                if(Ext.isEmpty(data)){
+                    data = [];
+                }
+                var duplicate = -1;
+                Ext.Array.each(data,function(item){
+                    if(item.date == dateStr){
+                        duplicate = Ext.Array.indexOf(data,item);
+                        return false;
+                    }
+                },undefined,true);
+                if(duplicate >= 0){
+                    Ext.Array.erase(data,duplicate,1);
+                }
+                data.push({
+                    date: dateStr,
+                    time: timeStr
+                });
+
+                kango.invokeAsync('kango.storage.setItem', 'work_log', data, function() {
+                    Ext.Msg.alert('打卡成功','今天('+dateStr+')下班時間：'+timeStr);
+                });
+
+            });
+        }
+    },
+
+    onLogBtnClick: function(button, e, options) {
+        kango.invokeAsync('kango.storage.getItem', 'work_log', function(data) {
+            var str = '';
+            Ext.getStore('WorkHourStore').loadData(data);
+            Ext.Array.each(data,function(item){
+                str += item.date + ': ' +item.time+'\n';
+            });
+
+            Ext.getCmp('workHourText').setValue(str);
+            Ext.getCmp('workHourText').show();
+        });
+    },
+
+    onMainTabPanelTabChange: function(tabPanel, newCard, oldCard, options) {
+        kango.invokeAsync('kango.ui.browserButton.setBadgeValue',newCard.title);
+        Ext.getCmp('workTimeField').setValue(
+        Ext.util.Format.date(new Date(),'g:i A')
+        );
     }
 
 });

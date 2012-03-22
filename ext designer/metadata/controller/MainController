@@ -7,6 +7,12 @@
     },
     "codeClass": null,
     "userConfig": {
+        "models": [
+            "WorkHourModel"
+        ],
+        "stores": [
+            "WorkHourStore"
+        ],
         "views": [
             "TopViewport"
         ],

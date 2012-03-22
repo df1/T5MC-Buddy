@@ -1,0 +1,74 @@
+{
+    "id": "ExtBox1-ext-gen13185",
+    "type": "datamodel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "WorkHourModel"
+    },
+    "customConfigs": [],
+    "designerId": "0507252b-e7df-44ea-9df5-0ee4715852f3",
+    "$viewOrder": 0,
+    "expanded": true,
+    "cn": [
+        {
+            "id": "ExtBox1-ext-gen26849",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dateFormat": "Y/m/d",
+                "name": "date",
+                "type": null,
+                "designer|userClassName": "MyField"
+            },
+            "customConfigs": [],
+            "expanded": true
+        },
+        {
+            "id": "ExtBox1-ext-gen26871",
+            "type": "datafield",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dateFormat": "H:i",
+                "name": "time",
+                "type": "date",
+                "designer|userClassName": "MyField1"
+            },
+            "customConfigs": [],
+            "expanded": true,
+            "cn": [
+                {
+                    "id": "ExtBox1-ext-gen13921",
+                    "type": "fixedfunction",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "convert",
+                        "designer|params": [
+                            "v",
+                            "rec"
+                        ],
+                        "implHandler": "var time = v.split(':');\nif(time[0]<8){\n    return new Date(1970,0,2,time[0],time[1],0);\n}else{\n    return new Date(1970,0,1,time[0],time[1],0);\n}",
+                        "designer|userClassName": "convert"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                }
+            ]
+        }
+    ]
+}

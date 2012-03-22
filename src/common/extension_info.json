@@ -1,8 +1,8 @@
 {
   "content_scripts": [], 
   "background_scripts": ["background.js"],
-  "homepage_url": "https://github.com/df1/TSMC-Buddy", 
-  "version": "0.1", 
+  "homepage_url": "http://df1.github.com/TSMC-Buddy", 
+  "version": "0.2", 
   "name": "TSMC Buddy", 
   "creator": "df1",
   "browser_button": {

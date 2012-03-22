@@ -18,6 +18,14 @@ Ext.Loader.setConfig({
 });
 
 Ext.application({
+    models: [
+        
+    ],
+
+    stores: [
+        
+    ],
+
     views: [
         
     ],

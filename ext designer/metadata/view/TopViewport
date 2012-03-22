@@ -26,7 +26,7 @@
             "codeClass": null,
             "userConfig": {
                 "id": "mainTabPanel",
-                "activeTab": 0,
+                "activeTab": 3,
                 "designer|userClassName": "MyTabPanel"
             },
             "customConfigs": [],
@@ -389,7 +389,7 @@
                         "designer|snapToGrid": 10
                     },
                     "customConfigs": [],
-                    "expanded": false,
+                    "expanded": true,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen4330",
@@ -453,6 +453,52 @@
                             },
                             "customConfigs": [],
                             "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen10138",
+                            "type": "datefield",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "id": "pwDateField",
+                                "width": 250,
+                                "value": null,
+                                "fieldLabel": null,
+                                "allowBlank": false,
+                                "emptyText": "出生年月日",
+                                "format": "Y/m/d",
+                                "maxValue": null,
+                                "showToday": false,
+                                "startDay": null,
+                                "designer|userClassName": "MyDateField",
+                                "layout|x": 10,
+                                "layout|y": 100
+                            },
+                            "customConfigs": [],
+                            "expanded": false,
+                            "cn": [
+                                {
+                                    "id": "ExtBox1-ext-gen30282",
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onDatefieldExpand",
+                                        "implHandler": "field.getPicker().setValue(new Date(1980,0,1));\nfield.getPicker().showMonthPicker();",
+                                        "name": "expand",
+                                        "scope": "me",
+                                        "designer|userClassName": "onDatefieldExpand"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                }
+                            ]
                         },
                         {
                             "id": "ExtBox1-ext-gen10856",
@@ -528,52 +574,6 @@
                             "expanded": true
                         },
                         {
-                            "id": "ExtBox1-ext-gen10138",
-                            "type": "datefield",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "id": "pwDateField",
-                                "width": 250,
-                                "value": null,
-                                "fieldLabel": null,
-                                "allowBlank": false,
-                                "emptyText": "出生年月日",
-                                "format": "Y/m/d",
-                                "maxValue": null,
-                                "showToday": false,
-                                "startDay": null,
-                                "designer|userClassName": "MyDateField",
-                                "layout|x": 10,
-                                "layout|y": 100
-                            },
-                            "customConfigs": [],
-                            "expanded": false,
-                            "cn": [
-                                {
-                                    "id": "ExtBox1-ext-gen30282",
-                                    "type": "basiceventbinding",
-                                    "reference": {
-                                        "name": "listeners",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "fn": "onDatefieldExpand",
-                                        "implHandler": "field.getPicker().setValue(new Date(1980,0,1));\nfield.getPicker().showMonthPicker();",
-                                        "name": "expand",
-                                        "scope": "me",
-                                        "designer|userClassName": "onDatefieldExpand"
-                                    },
-                                    "customConfigs": [],
-                                    "expanded": true
-                                }
-                            ]
-                        },
-                        {
                             "id": "ExtBox1-ext-gen7608",
                             "type": "radiogroup",
                             "reference": {
@@ -632,6 +632,24 @@
                                     },
                                     "customConfigs": [],
                                     "expanded": true
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen32733",
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onPwTypeRadioChange",
+                                        "implHandler": "if(newValue.type == 'notes'){\n    Ext.Msg.confirm('Confirm',\n    '此功能需要花費較長時間，是否開啟新視窗以避免不小心按掉？',\n    function(btn){\n        if(btn=='yes'){\n            window.open('designer.html');\n        }\n    });\n}",
+                                        "name": "change",
+                                        "scope": "me",
+                                        "designer|userClassName": "onPwTypeRadioChange"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
                                 }
                             ]
                         },
@@ -664,7 +682,7 @@
                                     "codeClass": null,
                                     "userConfig": {
                                         "fn": "onPwButtonClick",
-                                        "implHandler": "\nif(Ext.getCmp('pwPanel').getForm().isValid()){\n\n\n    var birthYear = Ext.getCmp('pwDateField').getValue().getFullYear();\n    var birthMonth = Ext.getCmp('pwDateField').getValue().getMonth() +1;\n    var birthDay = Ext.getCmp('pwDateField').getValue().getDate();\n\n\n    if(Ext.getCmp('pwTypeRadio').getValue().type == 'nt'){\n        Ext.Ajax.request({\n            url: 'http://pcmsweb/resetpassword/default.asp',\n            method: 'POST',\n            params: {\n                RequestUser: Ext.getCmp('pwNtField').getValue(),\n                UserID: Ext.getCmp('pwIdField').getValue(),\n                BirthYear: birthYear,\n                BirthMonth: birthMonth,\n                BirthDay: birthDay,\n                TEL: Ext.getCmp('pwTelField').getValue(),\n                Password1: Ext.getCmp('pwField').getValue(),\n                Password2: Ext.getCmp('pwField').getValue(),\n                Action:'submit'\n            },\n            success: function(response){\n\n            }\n        });\n\n    }else{\n\n        notesSubmitting = true;\n        notesSubmitCount = 0;\n        notesSubmitHistory = '更改紀錄：';  \n        notesSubmitProgress = Ext.Msg.show({\n            id: 'notesSubmitProgress',\n            title: 'Notes密碼更改中',\n            progress: true,\n            closable: false,\n            buttons: Ext.Msg.CANCEL,\n            progressText: '0/' + notesCycle,\n            fn: function(btn){\n                if(btn == 'cancel'){\n                    notesSubmitting = false;\n                    Ext.Msg.alert('Cancelled','<textarea cols=\"50\" rows=\"20\">' + notesSubmitHistory+'</textarea>');\n                }\n            }\n        });\n        notesSubmit();\n    }\n\n}",
+                                        "implHandler": "\nif(Ext.getCmp('pwPanel').getForm().isValid()){\n\n\n    var birthYear = Ext.getCmp('pwDateField').getValue().getFullYear();\n    var birthMonth = Ext.getCmp('pwDateField').getValue().getMonth() +1;\n    var birthDay = Ext.getCmp('pwDateField').getValue().getDate();\n\n\n    if(Ext.getCmp('pwTypeRadio').getValue().type == 'nt'){\n        Ext.Ajax.request({\n            url: 'http://pcmsweb/resetpassword/default.asp',\n            method: 'POST',\n            params: {\n                RequestUser: Ext.getCmp('pwNtField').getValue(),\n                UserID: Ext.getCmp('pwIdField').getValue(),\n                BirthYear: birthYear,\n                BirthMonth: birthMonth,\n                BirthDay: birthDay,\n                TEL: Ext.getCmp('pwTelField').getValue(),\n                Password1: Ext.getCmp('pwField').getValue(),\n                Password2: Ext.getCmp('pwField').getValue(),\n                Action:'submit'\n            },\n            success: function(response){\n\n            }\n        });\n\n    }else{\n\n        notesSubmitting = true;\n        notesSubmitCount = 0;\n        notesSubmitHistory = '更改紀錄：';  \n        notesSubmitProgress = Ext.Msg.show({\n            id: 'notesSubmitProgress',\n            title: 'Notes密碼更改中',\n            msg: '請耐心等候，勿關閉視窗',\n            progress: true,\n            closable: false,\n            buttons: Ext.Msg.CANCEL,\n            progressText: '0/' + notesCycle,\n            fn: function(btn){\n                if(btn == 'cancel'){\n                    notesSubmitting = false;\n                    Ext.Msg.alert('Cancelled','<textarea cols=\"50\" rows=\"20\">' + notesSubmitHistory+'</textarea>');\n                }\n            }\n        });\n        notesSubmit();\n    }\n\n}",
                                         "name": "click",
                                         "scope": "me",
                                         "designer|userClassName": "onPwButtonClick"
@@ -692,7 +710,7 @@
                         "designer|snapToGrid": 10
                     },
                     "customConfigs": [],
-                    "expanded": true,
+                    "expanded": false,
                     "cn": [
                         {
                             "id": "ExtBox1-ext-gen9030",
@@ -710,24 +728,215 @@
                             "expanded": true
                         },
                         {
-                            "id": "ExtBox1-ext-gen11215",
-                            "type": "displayfield",
+                            "id": "ExtBox1-ext-gen7592",
+                            "type": "timefield",
                             "reference": {
                                 "name": "items",
                                 "type": "array"
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "value": "808政策：有80%的員工得以在8點之前下班<br/><br/>Idea：提供打卡按鈕，或背景偵測瀏覽活動判定下班時間<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;以圖表顯示趨勢，看看自己是在80%還是在那20%",
-                                "fieldLabel": null,
-                                "designer|userClassName": "MyDisplayField",
+                                "id": "workTimeField",
+                                "width": 300,
+                                "readOnly": null,
+                                "value": "new Date()",
+                                "fieldLabel": "最後活動時間",
+                                "labelWidth": 90,
+                                "editable": null,
+                                "hideTrigger": null,
+                                "increment": 10,
+                                "maxValue": null,
+                                "minValue": null,
+                                "selectOnTab": null,
+                                "designer|userClassName": "MyTimeField",
                                 "layout|x": 10,
                                 "layout|y": 10
                             },
                             "customConfigs": [],
                             "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen9784",
+                            "type": "button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "height": 30,
+                                "id": "checkOutBtn",
+                                "width": 300,
+                                "text": "下班打卡",
+                                "designer|userClassName": "MyButton4",
+                                "layout|x": 10,
+                                "layout|y": 40
+                            },
+                            "customConfigs": [],
+                            "expanded": true,
+                            "cn": [
+                                {
+                                    "id": "ExtBox1-ext-gen15854",
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onCheckOutBtnClick",
+                                        "implHandler": "\nvar dateStr = Ext.util.Format.date(new Date(),'Y/m/d');\nvar timeStr = Ext.util.Format.date(Ext.getCmp('workTimeField').getValue(),'H:i');\n\nif(timeStr.split(':')[0] < 8){\n    var today = new Date();\n    today.setDate(today.getDate()-1);\n    var yesterday = Ext.util.Format.date(today,'Y/m/d');\n    Ext.Msg.confirm('太晚下班了吧',\n    '如果要算在'+yesterday+'請按Yes，<br/>要算在'+dateStr+'請按No。',\n    function(btn){\n        if(btn=='yes'){\n            dateStr = yesterday;\n        }\n        doCheckOut();\n    });\n}else{\n    doCheckOut();\n}\n\nfunction doCheckOut(){\n    kango.invokeAsync('kango.storage.getItem', 'work_log', function(data) {\n        if(Ext.isEmpty(data)){\n            data = [];\n        }\n        var duplicate = -1;\n        Ext.Array.each(data,function(item){\n            if(item.date == dateStr){\n                duplicate = Ext.Array.indexOf(data,item);\n                return false;\n            }\n        },undefined,true);\n        if(duplicate >= 0){\n            Ext.Array.erase(data,duplicate,1);\n        }\n        data.push({\n            date: dateStr,\n            time: timeStr\n        });\n\n        kango.invokeAsync('kango.storage.setItem', 'work_log', data, function() {\n            Ext.Msg.alert('打卡成功','今天('+dateStr+')下班時間：'+timeStr);\n        });\n\n    });\n}",
+                                        "name": "click",
+                                        "scope": "me",
+                                        "designer|userClassName": "onCheckOutBtnClick"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                }
+                            ]
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen20812",
+                            "type": "button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "height": 30,
+                                "id": "logBtn",
+                                "width": 300,
+                                "text": "查看打卡記錄",
+                                "designer|userClassName": "MyButton4",
+                                "layout|x": 10,
+                                "layout|y": 80
+                            },
+                            "customConfigs": [],
+                            "expanded": true,
+                            "cn": [
+                                {
+                                    "id": "ExtBox1-ext-gen20820",
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onLogBtnClick",
+                                        "implHandler": "kango.invokeAsync('kango.storage.getItem', 'work_log', function(data) {\n    var str = '';\n    Ext.getStore('WorkHourStore').loadData(data);\n    Ext.Array.each(data,function(item){\n        str += item.date + ': ' +item.time+'\\n';\n    });\n\n    Ext.getCmp('workHourText').setValue(str);\n    Ext.getCmp('workHourText').show();\n});",
+                                        "name": "click",
+                                        "scope": "me",
+                                        "designer|userClassName": "onLogBtnClick"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                }
+                            ]
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen16371",
+                            "type": "textareafield",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "height": 130,
+                                "hidden": true,
+                                "id": "workHourText",
+                                "width": 300,
+                                "fieldLabel": null,
+                                "emptyText": null,
+                                "designer|userClassName": "MyTextArea1",
+                                "layout|x": 10,
+                                "layout|y": 340
+                            },
+                            "customConfigs": [],
+                            "expanded": true
+                        },
+                        {
+                            "id": "ExtBox1-ext-gen26413",
+                            "type": "chart",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "height": 230,
+                                "id": "workHourChart",
+                                "width": 330,
+                                "animate": "true",
+                                "insetPadding": null,
+                                "store": "WorkHourStore",
+                                "designer|userClassName": "builtIn4",
+                                "layout|x": -5,
+                                "layout|y": 110
+                            },
+                            "customConfigs": [],
+                            "iconCls": "icon-line-chart",
+                            "expanded": true,
+                            "cn": [
+                                {
+                                    "id": "ExtBox1-ext-gen26427",
+                                    "type": "lineseries",
+                                    "reference": {
+                                        "name": "series",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "xField": "date",
+                                        "yField": "['time']",
+                                        "smooth": 3,
+                                        "designer|userClassName": "MyLineSeries"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                },
+                                {
+                                    "id": "ExtBox1-ext-gen6352",
+                                    "type": "timeaxis",
+                                    "reference": {
+                                        "name": "axes",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fields": "[\"time\"]",
+                                        "position": "left",
+                                        "title": null,
+                                        "dateFormat": "gA",
+                                        "step": "[\"h\",1]",
+                                        "designer|userClassName": "MyTimeAxis1"
+                                    },
+                                    "customConfigs": [],
+                                    "expanded": true
+                                }
+                            ]
                         }
                     ]
+                },
+                {
+                    "id": "ExtBox1-ext-gen4178",
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onMainTabPanelTabChange",
+                        "implHandler": "kango.invokeAsync('kango.ui.browserButton.setBadgeValue',newCard.title);\nExt.getCmp('workTimeField').setValue(\nExt.util.Format.date(new Date(),'g:i A')\n);",
+                        "name": "tabchange",
+                        "scope": "me",
+                        "designer|userClassName": "onMainTabPanelTabChange"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
                 }
             ]
         }

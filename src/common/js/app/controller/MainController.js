@@ -17,6 +17,12 @@ Ext.define('TsmcBuddy.controller.MainController', {
     extend: 'Ext.app.Controller',
     alias: 'controller.main',
 
+    models: [
+        'WorkHourModel'
+    ],
+    stores: [
+        'WorkHourStore'
+    ],
     views: [
         'TopViewport'
     ],
