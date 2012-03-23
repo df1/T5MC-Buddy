@@ -49,6 +49,46 @@
     h2 { font-size: 1.5em; color: #CCC; font-family: 'League Gothic', sans-serif;}
     h3 { text-align: center; color: #CCC; }
     a { color: #FFF; }
+    .download-btn {
+      border-color: #5A8942;
+      background-color: #7EC957;
+      background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(255, 255, 255, 0.3)), color-stop(50%, rgba(255, 255, 255, 0.22)), color-stop(50%, rgba(255, 255, 255, 0.12)), color-stop(100%, rgba(255, 255, 255, 0)));
+      background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.3),rgba(255, 255, 255, 0.22) 50%,rgba(255, 255, 255, 0.12) 50%,rgba(255, 255, 255, 0));
+      background: -moz-linear-gradient(top, rgba(255, 255, 255, 0.3),rgba(255, 255, 255, 0.22) 50%,rgba(255, 255, 255, 0.12) 50%,rgba(255, 255, 255, 0));
+      background: -o-linear-gradient(top, rgba(255, 255, 255, 0.3),rgba(255, 255, 255, 0.22) 50%,rgba(255, 255, 255, 0.12) 50%,rgba(255, 255, 255, 0));
+      background: -ms-linear-gradient(top, rgba(255, 255, 255, 0.3),rgba(255, 255, 255, 0.22) 50%,rgba(255, 255, 255, 0.12) 50%,rgba(255, 255, 255, 0));
+      background: linear-gradient(top, rgba(255, 255, 255, 0.3),rgba(255, 255, 255, 0.22) 50%,rgba(255, 255, 255, 0.12) 50%,rgba(255, 255, 255, 0));
+      -webkit-box-shadow: rgba(0,0,0,0.2) 0 0 6px,rgba(255,255,255,0.4) 0 1px 0 inset;
+      -moz-box-shadow: rgba(0,0,0,0.2) 0 0 6px,rgba(255,255,255,0.4) 0 1px 0 inset;
+      box-shadow: rgba(0,0,0,0.2) 0 0 6px,rgba(255,255,255,0.4) 0 1px 0 inset;
+      -webkit-transition: all 1s ease-in-out;
+      -moz-transition: all 1s ease-in-out;
+      -ms-transition: all 1s ease-in-out;
+      -o-transition: all 1s ease-in-out;
+      transition: all 1s ease-in-out;
+      padding: 9px 15px;
+      color: rgba(0, 0, 0, 0.75);
+      font-size: 14px;
+    }
+    .download-btn:hover {
+      background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(255, 255, 255, 0.3)), color-stop(100%, rgba(255, 255, 255, 0)));
+      background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.3),rgba(255, 255, 255, 0));
+      background: -moz-linear-gradient(top, rgba(255, 255, 255, 0.3),rgba(255, 255, 255, 0));
+      background: -o-linear-gradient(top, rgba(255, 255, 255, 0.3),rgba(255, 255, 255, 0));
+      background: -ms-linear-gradient(top, rgba(255, 255, 255, 0.3),rgba(255, 255, 255, 0));
+      background: linear-gradient(top, rgba(255, 255, 255, 0.3),rgba(255, 255, 255, 0));
+    }    
+    .download-btn:active {
+      background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(255, 255, 255, 0)), color-stop(100%, rgba(255, 255, 255, 0.3)));
+      background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0),rgba(255, 255, 255, 0.3));
+      background: -moz-linear-gradient(top, rgba(255, 255, 255, 0),rgba(255, 255, 255, 0.3));
+      background: -o-linear-gradient(top, rgba(255, 255, 255, 0),rgba(255, 255, 255, 0.3));
+      background: -ms-linear-gradient(top, rgba(255, 255, 255, 0),rgba(255, 255, 255, 0.3));
+      background: linear-gradient(top, rgba(255, 255, 255, 0),rgba(255, 255, 255, 0.3));
+      -webkit-box-shadow: rgba(0,0,0,0.2) 0 0 6px,rgba(255,255,255,0.3) 0 1px 0 inset;
+      -moz-box-shadow: rgba(0,0,0,0.2) 0 0 6px,rgba(255,255,255,0.3) 0 1px 0 inset;
+      box-shadow: rgba(0,0,0,0.2) 0 0 6px,rgba(255,255,255,0.3) 0 1px 0 inset;
+    }
     .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
     .download { float: right; }
     pre { background: #000; color: #fff; padding: 15px;}
@@ -75,18 +115,22 @@
     </p>
 
     <h2>Install</h2>
-    <p>Currently (v0.2), only Chrome version can run without compatibility issue.<br/>
+    <p>Latest release: 0.2<br/>
+      In this version, only Chrome and Safari browsers are supported.<br/>
       <a href="https://github.com/df1/TSMC-Buddy/raw/master/output/tsmcbuddy_0.2.crx">
       Download/Install for Chrome
+      </a><br/>
+      <a href="https://github.com/df1/TSMC-Buddy/raw/master/output/tsmcbuddy_0.2.safariextz">
+      Download/Install for Safari
       </a>
     </p>
     
 
     <h2>Download Project</h2>
     <p>    
-      <a href="https://github.com/df1/TSMC-Buddy/zipball/master">
+      <a class="download-btn" href="https://github.com/df1/TSMC-Buddy/zipball/master">
         <img border="0" width="90" src="https://github.com/images/modules/download/zip.png"></a>
-      <a href="https://github.com/df1/TSMC-Buddy/tarball/master">
+      <a class="download-btn" href="https://github.com/df1/TSMC-Buddy/tarball/master">
         <img border="0" width="90" src="https://github.com/images/modules/download/tar.png"></a>
     </p>
     <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
