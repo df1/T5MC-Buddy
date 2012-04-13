@@ -13,7 +13,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>__version__</string>
 	<key>CFBundleVersion</key>
-	<string>__bundle_version__</string>
+	<string>__version__</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Database Quota</key>
@@ -44,10 +44,11 @@
 		<dict>
 			<key>Start</key>
 			<array>
+				<string>includes/content_kango.js</string>
 				<string>includes/invoke_async_module.js</string>
 				<string>includes/message_target_module.js</string>
-				<string>includes/content_userscript.js</string>
-				<string>includes/content_kango.js</string>
+				<string>includes/userscript_client.js</string>
+				<string>includes/content_init.js</string>
 			</array>
 		</dict>
 		<key>Whitelist</key>

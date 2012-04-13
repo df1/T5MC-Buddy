@@ -3,11 +3,7 @@
 <?xml-stylesheet type="text/css" href="chrome://browser/skin/browser.css" ?>
 <?xml-stylesheet type="text/css" href="theme/bubble/style.css" ?>
 
-<window 
-	id="Kango-Popup" 
-	title="Kango-Popup" 
-	hidechrome="true"
-	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+<window id="Kango-Popup" title="Kango-Popup" hidechrome="true" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 	
 	<stack flex="1">
 		<vbox flex="1">
@@ -32,6 +28,5 @@
 		<box id="pin" style="display:none;"></box>
 	</stack>
 
-	<script type="application/javascript" src="../kango/event_target.js"></script>
 	<script type="application/javascript" src="popup_window.js"></script>
 </window>
